@@ -1,0 +1,69 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity half_sub is
+    Port ( A, B : in  STD_LOGIC;
+           Diff, Borrow : out  STD_LOGIC);
+end half_sub;
+
+architecture Behavioral of half_sub is
+
+begin
+
+Diff <= A xor B;
+Borrow <= not A and B;
+
+end Behavioral;
+
+//Test Bench Code:
+
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ 
+ENTITY half_sub_tb IS
+END half_sub_tb;
+ 
+ARCHITECTURE behavior OF half_sub_tb IS 
+ 
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT half_sub
+    PORT(
+         A : IN  std_logic;
+         B : IN  std_logic;
+         Diff : OUT  std_logic;
+         Borrow : OUT  std_logic
+        );
+    END COMPONENT;
+    
+
+   --Inputs
+   signal A : std_logic := '0';
+   signal B : std_logic := '0';
+
+ 	--Outputs
+   signal Diff : std_logic;
+   signal Borrow : std_logic;
+ 
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: half_sub PORT MAP (
+          A => A,
+          B => B,
+          Diff => Diff,
+          Borrow => Borrow
+        );
+
+   -- Stimulus process
+   stim_proc: process
+   begin		
+      
+		A <= '0'; B <= '0'; wait for 10 ns;
+		A <= '0'; B <= '1'; wait for 10 ns;
+		A <= '1'; B <= '0'; wait for 10 ns;
+		A <= '1'; B <= '1'; wait for 10 ns;
+		
+   end process;
+
+END;
