@@ -1,0 +1,107 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity full_subtractor is
+    Port ( A, Bi, C : in  STD_LOGIC;
+           D, Bo : out  STD_LOGIC);
+end full_subtractor;
+
+architecture Behavioral of full_subtractor is
+
+begin
+
+	D <= A xor Bi xor C;
+	Bo <= ((not A) and Bi) or (C and ((not A) or Bi));
+
+end Behavioral;
+
+//Test Bench Code:
+
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+ 
+ENTITY full_sub_tb IS
+END full_sub_tb;
+ 
+ARCHITECTURE behavior OF full_sub_tb IS 
+ 
+    -- Component Declaration for the Unit Under Test (UUT)
+ 
+    COMPONENT full_subtractor
+    PORT(
+         A : IN  std_logic;
+         Bi : IN  std_logic;
+         C : IN  std_logic;
+         D : OUT  std_logic;
+         Bo : OUT  std_logic
+        );
+    END COMPONENT;
+    
+
+   --Inputs
+   signal A : std_logic := '0';
+   signal Bi : std_logic := '0';
+   signal C : std_logic := '0';
+
+ 	--Outputs
+   signal D : std_logic;
+   signal Bo : std_logic;
+ 
+BEGIN
+ 
+	-- Instantiate the Unit Under Test (UUT)
+   uut: full_subtractor PORT MAP (
+          A => A,
+          Bi => Bi,
+          C => C,
+          D => D,
+          Bo => Bo
+        );
+
+    -- Stimulus process
+   stim_proc: process
+   begin	
+		
+		A <= '0';
+		Bi <= '0';
+		C <= '0';
+		wait for 10 ns;
+		
+		A <= '0';
+		Bi <= '0';
+		C <= '1';
+		wait for 10 ns;
+		
+		A <= '0';
+		Bi <= '1';
+		C <= '0';
+		wait for 10 ns;
+		
+		A <= '0';
+		Bi <= '1';
+		C <= '1';
+		wait for 10 ns;
+		
+		A <= '1';
+		Bi <= '0';
+		C <= '0';
+		wait for 10 ns;
+		
+		A <= '1';
+		Bi <= '0';
+		C <= '1';
+		wait for 10 ns;
+		
+		A <= '1';
+		Bi <= '1';
+		C <= '0';
+		wait for 10 ns;
+		
+		A <= '1';
+		Bi <= '1';
+		C <= '1';
+		wait for 10 ns;
+ 
+   end process;
+
+END;
